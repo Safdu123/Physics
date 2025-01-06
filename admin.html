@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+    // Fetch and display blog posts with links to their detail pages
+    fetch('getPosts.php')
+        .then(response => response.json())
+        .then(posts => {
+            const blogSection = document.getElementById('blog-posts');
+            posts.forEach((post, index) => {
+                blogSection.innerHTML += `
+                    <div class="blog">
+                        <h2><a href="blogDetail.php?id=${index}" style="text-decoration: none; color: #00509e;">${post.title}</a></h2>
+                        <img src="${post.image}" alt="${post.title}" style="max-width:100%; margin:1rem 0;">
+                        <p>${post.content.substring(0, 100)}... <a href="blogDetail.php?id=${index}" style="color: #00509e;">Read More</a></p>
+                    </div>`;
+            });
+        });
+</script>
+
+    <a href="logout.php" style="color: red; text-decoration: none;">Logout</a>
+    <!-- Add this script to redirect users if they haven't logged in -->
+    <script>
+        // Check if the user is logged in
+        fetch('sessionCheck.php')
+            .then(response => {
+                if (!response.ok) {
+                    window.location.href = 'login.html'; // Redirect to login if not logged in
+                }
+            });
+    </script>
+    <!-- The rest of your admin.html code -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Physics Simplify</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .admin-panel {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .admin-panel h2 {
+            color: #00274d;
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        input, textarea, button {
+            width: 100%;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #00509e;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #00274d;
+        }
+        .blog-list {
+            margin-top: 2rem;
+        }
+        .blog-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #f9f9f9;
+        }
+        .blog-item h3 {
+            margin: 0 0 0.5rem;
+            color: #00274d;
+        }
+        .blog-item button {
+            background-color: red;
+            color: white;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .blog-item button:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-panel">
+        <h2>Post a New Blog</h2>
+        <form id="blog-form" enctype="multipart/form-data">
+            <label for="title">Blog Title:</label>
+            <input type="text" id="title" name="title" required>
+            
+            <label for="content">Content:</label>
+            <textarea id="content" name="content" rows="5" required></textarea>
+            
+            <label for="image">Upload Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+            
+            <button type="submit">Post Blog</button>
+        </form>
+
+        <h2>Manage Existing Blogs</h2>
+        <div class="blog-list" id="blog-list">
+            <!-- Blog items will be dynamically inserted here -->
+        </div>
+    </div>
+    <script>
+        // Function to fetch and display blogs
+        function loadBlogs() {
+            fetch('getPosts.php')
+                .then(response => response.json())
+                .then(posts => {
+                    const blogList = document.getElementById('blog-list');
+                    blogList.innerHTML = '';
+                    posts.forEach((post, index) => {
+                        blogList.innerHTML += `
+                            <div class="blog-item">
+                                <h3>${post.title}</h3>
+                                <img src="${post.image}" alt="${post.title}" style="max-width:100%; margin:1rem 0;">
+                                <p>${post.content}</p>
+                                <button onclick="deleteBlog(${index})">Delete Blog</button>
+                            </div>`;
+                    });
+                });
+        }
+
+        // Function to delete a blog post
+        function deleteBlog(index) {
+            fetch('deleteBlog.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ index })
+            }).then(response => {
+                if (response.ok) {
+                    alert('Blog deleted successfully!');
+                    loadBlogs(); // Reload the blog list
+                } else {
+                    alert('Error deleting blog.');
+                }
+            });
+        }
+
+        // Handle new blog form submission
+        document.getElementById('blog-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('title', document.getElementById('title').value);
+            formData.append('content', document.getElementById('content').value);
+            formData.append('image', document.getElementById('image').files[0]);
+            
+            fetch('postBlog.php', {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    alert('Blog posted successfully!');
+                    loadBlogs(); // Reload the blog list
+                } else {
+                    alert('Error posting blog.');
+                }
+            });
+        });
+
+        // Load blogs when the page loads
+        loadBlogs();
+    </script>
+</body>
+</html>
+
