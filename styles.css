@@ -1,0 +1,183 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000; /* Retained first code's theme */
+    color: #fff;
+    line-height: 1.6;
+}
+
+background-color: rgba(17, 17, 17, 0.9);
+
+/* Header */
+header {
+    background-color: #111; /* Retained first code's header style */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header h1 {
+    font-size: 2rem;
+    color: #fff;
+}
+header .menu {
+    font-size: 1.2rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Menu Overlay */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95); /* Retained first code's overlay color */
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+.menu-overlay.active {
+    transform: translateX(0);
+}
+.menu-overlay .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.5rem;
+    color: #fff;
+    cursor: pointer;
+}
+.menu-overlay nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.menu-overlay nav a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.5rem;
+    margin: 10px 0;
+}
+.menu-overlay nav a:hover {
+    color: #1db954;
+}
+
+/* Hero Section */
+.hero {
+    background-image: url('https://images.app.goo.gl/LvKmxHdbMquSue4B8'); /* Retained first code's background */
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 100px 20px;
+    text-align: center;
+}
+.hero h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+.hero p {
+    font-size: 1.2rem;
+}
+
+/* Blog Section */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+.blog-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+.blog-card {
+    background: #111; /* Adjusted to match the first code's theme */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    opacity: 0;
+    transform: scale(1.2);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.blog-card.show {
+    opacity: 1;
+    transform: scale(1);
+}
+.blog-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+}
+.blog-card h2 {
+    font-size: 1.5rem;
+    color: #1db954; /* Retained the first code's highlight color */
+    margin: 1rem 0 0.5rem;
+}
+.blog-card p {
+    font-size: 1rem;
+    color: #aaa; /* Adjusted to match the first code */
+    margin: 0 0 1rem;
+}
+.blog-card a {
+    display: inline-block;
+    color: #1db954;
+    text-decoration: none;
+    font-weight: bold;
+}
+.blog-card a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    background-color: #111; /* Retained first code's footer background */
+    text-align: center;
+    padding: 10px 0;
+    font-size: 0.8rem;
+    color: #777; /* Adjusted to match the first code */
+}
+footer a {
+    color: #1db954;
+    text-decoration: none;
+}
+
+/* Add this to your styles.css */
+.blog-card h2, 
+.blog-card p, 
+header h1, 
+header .menu, 
+footer p {
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Soft shadow */
+}
+
+.blog-card h2 {
+    color: #1db954; /* Already bright, keep it */
+}
+
+.blog-card p {
+    color: #ddd; /* Change to lighter gray for better visibility */
+}
+
+footer p {
+    color: #bbb; /* Slightly brighter for contrast */
+}
+.blog-card {
+    border: 1px solid #333; /* Dark gray border for subtle separation */
+}
+
+.blog-card {
+    background-color: rgba(17, 17, 17, 0.9); /* Slightly transparent black */
+}
+
+.blog-card:hover {
+    transform: scale(1.05); /* Slightly enlarge the card */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* More prominent shadow */
+}
+
+
