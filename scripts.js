@@ -63,3 +63,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+
+
+function redirectWithDelay(url) {
+    // Add active class to play the animation
+    event.target.classList.add('active');
+    
+    // Wait 1 second before redirecting
+    setTimeout(() => {
+        window.location.href = url;
+    }, 1000); // 1000ms = 1 second
+}
